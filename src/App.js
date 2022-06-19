@@ -1,23 +1,92 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import Top from "./components/top";
+import AddItem from "./components/addItem";
+import Item from "./components/item";
+import { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    let initItemsFromStorage = JSON.parse(localStorage.getItem("items")) || [];
+    console.log(initItemsFromStorage);
+    setItems(initItemsFromStorage);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(items));
+  }, [items]);
+
+  var totalIncome = 0;
+  var totalExpenses = 0;
+  items.forEach((element) => {
+    if (element.type === "income") {
+      totalIncome += element.amount;
+    }
+    if (element.type === "expenses") {
+      totalExpenses += element.amount;
+    }
+  });
+
+  function handleAddItem(selectOption, description, amount) {
+    setItems([
+      ...items,
+      {
+        id: uuidv4(),
+        description: description,
+        type: selectOption,
+        amount: parseInt(amount),
+      },
+    ]);
+  }
+
+  function handleCancelClick(id) {
+    const newItems = [...items];
+    setItems(newItems.filter((e) => e.id !== id));
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Top income={totalIncome} expenses={totalExpenses} />
+      <div className="bottom">
+        <AddItem onAddItem={handleAddItem} />
+        <div className="container clearfix">
+          <div className="income">
+            <h2 className="icome__title">Income</h2>
+            <div className="income__list">
+              {items
+                .filter((e) => e.type === "income")
+                .map((item) => (
+                  <Item
+                    type={item.type}
+                    description={item.description}
+                    amount={item.amount}
+                    percentage={(item.amount * 100) / totalIncome}
+                    onCancelClick={() => handleCancelClick(item.id)}
+                  />
+                ))}
+            </div>
+          </div>
+          <div className="expenses">
+            <h2 className="expenses__title">Expenses</h2>
+
+            <div className="expenses__list">
+              {items
+                .filter((e) => e.type === "expenses")
+                .map((item) => (
+                  <Item
+                    type={item.type}
+                    description={item.description}
+                    amount={item.amount}
+                    percentage={(item.amount * 100) / totalIncome}
+                    onCancelClick={() => handleCancelClick(item.id)}
+                  />
+                ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
