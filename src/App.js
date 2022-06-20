@@ -3,19 +3,26 @@ import "./App.css";
 import Top from "./components/top";
 import AddItem from "./components/addItem";
 import Item from "./components/item";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+// const isMouted = false
 function App() {
+  const isMounted = useRef(false);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     let initItemsFromStorage = JSON.parse(localStorage.getItem("items")) || [];
-    console.log(initItemsFromStorage);
+    console.log("get item", initItemsFromStorage);
     setItems(initItemsFromStorage);
   }, []);
 
   useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
+    console.log("items useEffect2", items);
     localStorage.setItem("items", JSON.stringify(items));
   }, [items]);
 
@@ -59,6 +66,7 @@ function App() {
                 .filter((e) => e.type === "income")
                 .map((item) => (
                   <Item
+                    key={item.id}
                     type={item.type}
                     description={item.description}
                     amount={item.amount}
@@ -76,6 +84,7 @@ function App() {
                 .filter((e) => e.type === "expenses")
                 .map((item) => (
                   <Item
+                    key={item.id}
                     type={item.type}
                     description={item.description}
                     amount={item.amount}
