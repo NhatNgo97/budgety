@@ -1,4 +1,20 @@
-export default function Top({ income, expenses }) {
+import { useSelector } from "react-redux/es/exports";
+import { itemsSelector } from "../redux/selectors";
+import { VndCurrencyConverter } from "../helper/VndCurrencyConverter";
+
+export default function Top() {
+  const reduxItems = useSelector(itemsSelector);
+
+  var totalIncome = 0;
+  var totalExpenses = 0;
+  reduxItems.forEach((element) => {
+    if (element.type === "income") {
+      totalIncome += parseInt(element.amount);
+    }
+    if (element.type === "expenses") {
+      totalExpenses += parseInt(element.amount);
+    }
+  });
   return (
     <div className="top">
       <div className="budget">
@@ -7,12 +23,17 @@ export default function Top({ income, expenses }) {
           <span className="budget__title--month">%Month%</span>:
         </div>
 
-        <div className="budget__value">+ {income - expenses}</div>
+        <div className="budget__value">
+          {" "}
+          {VndCurrencyConverter(totalIncome - totalExpenses)}
+        </div>
 
         <div className="budget__income clearfix">
           <div className="budget__income--text">Income</div>
           <div className="right">
-            <div className="budget__income--value">+ {income}</div>
+            <div className="budget__income--value">
+              + {VndCurrencyConverter(totalIncome)}
+            </div>
             <div className="budget__income--percentage">&nbsp;</div>
           </div>
         </div>
@@ -20,10 +41,12 @@ export default function Top({ income, expenses }) {
         <div className="budget__expenses clearfix">
           <div className="budget__expenses--text">Expenses</div>
           <div className="right clearfix">
-            <div className="budget__expenses--value">- {expenses}</div>
+            <div className="budget__expenses--value">
+              - {VndCurrencyConverter(totalExpenses)}
+            </div>
             <div className="budget__expenses--percentage">
               {" "}
-              {parseInt((expenses * 100) / income)} %
+              {parseInt((totalExpenses * 100) / totalIncome)} %
             </div>
           </div>
         </div>

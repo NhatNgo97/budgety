@@ -5,3 +5,10 @@ export const addItemAction = (data) => {
     payload: data,
   };
 };
+
+export const deleteItemAction = (id) => {
+  return {
+    type: "deleteItem",
+    payload: id,
+  };
+};

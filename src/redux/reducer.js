@@ -1,24 +1,30 @@
 import { v4 as uuidv4 } from "uuid";
 
-const initState = {
+const initState = JSON.parse(localStorage.getItem("items")) || {
   input: {
     type: "income",
     description: "",
     amount: 0,
   },
-  items: [
-    { id: 1, type: "income", description: "asdsdadada", amount: 123 },
-    { id: 2, type: "expenses", description: "asdsdadada", amount: 456 },
-  ],
+  items: [],
 };
 
 const rootReducer = (state = initState, action) => {
   switch (action.type) {
     case "addItem":
-      return {
+      var newState = {
         ...state,
         items: [...state.items, action.payload],
       };
+      localStorage.setItem("items", JSON.stringify(newState));
+      return newState;
+    case "deleteItem":
+      newState = {
+        ...state,
+        items: [...state.items].filter((e) => e.id !== action.payload),
+      };
+      localStorage.setItem("items", JSON.stringify(newState));
+      return newState;
     default:
       return state;
   }
