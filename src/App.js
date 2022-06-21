@@ -5,15 +5,19 @@ import AddItem from "./components/addItem";
 import Item from "./components/item";
 import { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useSelector } from "react-redux";
+import { itemsSelector } from "./redux/selectors";
 
 // const isMouted = false
 function App() {
   const isMounted = useRef(false);
   const [items, setItems] = useState([]);
 
+  const reduxItems = useSelector(itemsSelector);
+  console.log(reduxItems);
+
   useEffect(() => {
     let initItemsFromStorage = JSON.parse(localStorage.getItem("items")) || [];
-    console.log("get item", initItemsFromStorage);
     setItems(initItemsFromStorage);
   }, []);
 
@@ -22,7 +26,6 @@ function App() {
       isMounted.current = true;
       return;
     }
-    console.log("items useEffect2", items);
     localStorage.setItem("items", JSON.stringify(items));
   }, [items]);
 
@@ -62,7 +65,7 @@ function App() {
           <div className="income">
             <h2 className="icome__title">Income</h2>
             <div className="income__list">
-              {items
+              {reduxItems
                 .filter((e) => e.type === "income")
                 .map((item) => (
                   <Item
@@ -80,7 +83,7 @@ function App() {
             <h2 className="expenses__title">Expenses</h2>
 
             <div className="expenses__list">
-              {items
+              {reduxItems
                 .filter((e) => e.type === "expenses")
                 .map((item) => (
                   <Item

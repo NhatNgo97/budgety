@@ -1,12 +1,24 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addItemAction } from "../redux/actions";
+import { v4 as uuidv4 } from "uuid";
 
 export default function AddItem({ onAddItem }) {
+  const dispatch = useDispatch();
   const [selectOption, setSelectOption] = useState("income");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(0);
 
   function handleClick() {
     onAddItem(selectOption, description, amount);
+    dispatch(
+      addItemAction({
+        id: uuidv4(),
+        type: selectOption,
+        description: description,
+        amount: amount,
+      })
+    );
     setDescription("");
     setAmount(0);
   }
