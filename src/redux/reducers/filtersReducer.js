@@ -10,7 +10,7 @@ const filtersReducer = (state = initState, action) => {
         ...state,
         search: action.payload,
       };
-    case "filters/itemOrder":
+    case "filters/setItemOrder":
       return {
         ...state,
         order: action.payload,

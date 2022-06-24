@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
-import { itemsSelector } from "../redux/selectors";
+import { itemsSelector, remainingSelector } from "../redux/selectors";
 
 export default function useBudgetData() {
   const listItems = useSelector(itemsSelector);
+  const remainingItems = useSelector(remainingSelector);
 
   var totalIncome = 0;
   var totalExpenses = 0;
@@ -19,5 +20,6 @@ export default function useBudgetData() {
     listItems,
     totalIncome,
     totalExpenses,
+    remainingItems,
   };
 }

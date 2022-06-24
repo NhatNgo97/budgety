@@ -9,7 +9,18 @@ export const remainingSelector = createSelector(
   searchFilterSelector,
   orderFilterSelector,
   (items, search, order) => {
-    console.log(search);
-    return items.filter((item) => item.description.includes(search));
+    const searchItems = items.filter((item) =>
+      item.description.includes(search)
+    );
+    if (order === "ascending") {
+      return searchItems.sort((a, b) => a.amount - b.amount);
+    }
+    if (order === "descending") {
+      return searchItems.sort((a, b) => -a.amount - b.amount);
+    }
+    return searchItems;
   }
 );
+
+//ascending
+//descending

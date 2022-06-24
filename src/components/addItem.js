@@ -4,7 +4,6 @@ import { addItemAction } from "../redux/actions";
 import { v4 as uuidv4 } from "uuid";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { type } from "@testing-library/user-event/dist/type";
 
 export default function AddItem() {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { searchItemAction } from "../redux/actions";
+import { searchItemAction, orderItemAction } from "../redux/actions";
 
 export default function Filter() {
   const dispatch = useDispatch();
@@ -10,6 +10,10 @@ export default function Filter() {
   useEffect(() => {
     dispatch(searchItemAction(search));
   }, [search]);
+
+  useEffect(() => {
+    dispatch(orderItemAction(order));
+  }, [order]);
 
   return (
     <div

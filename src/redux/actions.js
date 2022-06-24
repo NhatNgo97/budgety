@@ -19,3 +19,10 @@ export const searchItemAction = (data) => {
     payload: data,
   };
 };
+
+export const orderItemAction = (data) => {
+  return {
+    type: "filters/setItemOrder",
+    payload: data,
+  };
+};

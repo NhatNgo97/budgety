@@ -1,16 +1,13 @@
 import Item from "./item";
-import { useSelector } from "react-redux/es/exports";
-import { itemsSelector, remainingSelector } from "../redux/selectors";
+
 import useBudgetData from "../hooks/useBudgetData";
 
 function BudgetList({ type }) {
-  const reduxItems = useSelector(remainingSelector);
-
-  const { totalIncome } = useBudgetData();
+  const { totalIncome, remainingItems } = useBudgetData();
 
   return (
     <div className={type + "__list"}>
-      {reduxItems
+      {remainingItems
         .filter((e) => e.type === type)
         .map((item) => (
           <Item

@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux/es/exports";
-import { itemsSelector } from "../redux/selectors";
 import { VndCurrencyConverter } from "../helper/VndCurrencyConverter";
 import useBudgetData from "../hooks/useBudgetData";
 
