@@ -158,6 +158,10 @@ body {
 .add__description {
   width: 400px;
 }
+
+.add__datePicker {
+  width: auto;
+}
 .add__value {
   width: 100px;
 }
@@ -253,6 +257,16 @@ h2 {
   text-align: center;
 }
 
+.iten__month {
+  margin-right: 11px;
+  float: left;
+  font-size: 11px;
+  background-color: #e688fd;
+  padding: 3px;
+  border-radius: 3px;
+  width: 50px;
+  text-align: center;
+}
 .income .item__value,
 .income .item__delete--btn {
   color: #28b9b5;

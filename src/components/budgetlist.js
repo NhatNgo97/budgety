@@ -2,12 +2,10 @@ import Item from "./item";
 import { useSelector } from "react-redux/es/exports";
 import { itemsSelector } from "../redux/selectors";
 
-function List({ type }) {
+function BudgetList({ type }) {
   const reduxItems = useSelector(itemsSelector);
-  console.log(reduxItems);
   var totalIncome = 0;
   reduxItems.forEach((element) => {
-    console.log(element);
     if (element.type === "income") {
       totalIncome += parseInt(element.amount);
     }
@@ -24,6 +22,7 @@ function List({ type }) {
             type={item.type}
             description={item.description}
             amount={item.amount}
+            date={item.date}
             percentage={(item.amount * 100) / totalIncome}
           />
         ))}
@@ -31,4 +30,4 @@ function List({ type }) {
   );
 }
 
-export default List;
+export default BudgetList;
