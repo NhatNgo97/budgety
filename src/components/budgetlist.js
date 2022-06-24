@@ -1,15 +1,12 @@
 import Item from "./item";
 import { useSelector } from "react-redux/es/exports";
-import { itemsSelector } from "../redux/selectors";
+import { itemsSelector, remainingSelector } from "../redux/selectors";
+import useBudgetData from "../hooks/useBudgetData";
 
 function BudgetList({ type }) {
-  const reduxItems = useSelector(itemsSelector);
-  var totalIncome = 0;
-  reduxItems.forEach((element) => {
-    if (element.type === "income") {
-      totalIncome += parseInt(element.amount);
-    }
-  });
+  const reduxItems = useSelector(remainingSelector);
+
+  const { totalIncome } = useBudgetData();
 
   return (
     <div className={type + "__list"}>

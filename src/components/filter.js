@@ -1,24 +1,22 @@
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { searchItemAction } from "../redux/actions";
 
 export default function Filter() {
   const dispatch = useDispatch();
-
   const [search, setSearch] = useState("");
   const [order, setOrder] = useState("default");
 
-  function handleSearch() {
-    setSearch(search);
+  useEffect(() => {
     dispatch(searchItemAction(search));
-  }
+  }, [search]);
 
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "flex-end",
-        margin: "1em 15em -2em 15em",
+        margin: "1em 15vw -2em auto",
       }}
       className="filter__container"
     >
@@ -29,7 +27,7 @@ export default function Filter() {
             width: "15vw",
           }}
           value={search}
-          onChange={handleSearch}
+          onChange={(e) => setSearch(e.target.value)}
           className="add__description red-focus"
           placeholder="Search"
         />

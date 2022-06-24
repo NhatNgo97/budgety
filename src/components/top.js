@@ -1,20 +1,10 @@
 import { useSelector } from "react-redux/es/exports";
 import { itemsSelector } from "../redux/selectors";
 import { VndCurrencyConverter } from "../helper/VndCurrencyConverter";
+import useBudgetData from "../hooks/useBudgetData";
 
 export default function Top() {
-  const reduxItems = useSelector(itemsSelector);
-
-  var totalIncome = 0;
-  var totalExpenses = 0;
-  reduxItems.forEach((element) => {
-    if (element.type === "income") {
-      totalIncome += parseInt(element.amount);
-    }
-    if (element.type === "expenses") {
-      totalExpenses += parseInt(element.amount);
-    }
-  });
+  const { totalIncome, totalExpenses } = useBudgetData();
   return (
     <div className="top">
       <div className="budget">
