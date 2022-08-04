@@ -2,13 +2,30 @@ import { VndCurrencyConverter } from "../helper/VndCurrencyConverter";
 import useBudgetData from "../hooks/useBudgetData";
 
 export default function Top() {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const d = new Date();
+  let month = months[d.getMonth()];
   const { totalIncome, totalExpenses } = useBudgetData();
   return (
     <div className="top">
       <div className="budget">
         <div className="budget__title">
           Available Budget in{" "}
-          <span className="budget__title--month">%Month%</span>:
+          <span className="budget__title--month">{month}</span>:
         </div>
 
         <div className="budget__value">
